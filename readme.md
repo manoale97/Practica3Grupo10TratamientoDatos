@@ -33,18 +33,16 @@ Con el fin de garantizar la calidad y confiabilidad del análisis, se realizaron
    - Se eliminaron registros repetidos empleando como llave compuesta (`title`, `attack_type`, `target_type`).  
    - Se retuvo la versión más completa y documentada de cada escenario.  
 
-6. **Creación de vectores para `detection_method`**  
-   - El campo fue tokenizado y transformado en vectores multietiqueta.  
+6. **Creación de vectores para `Category` y para `Impact`**  
+   - El campo fue tokenizado y transformado en vectores multietiqueta especificamente usando TfidfVectorizer.  
    - Esto facilita correlaciones entre métodos de detección y tipos de ataque, y habilita usos posteriores en modelos de machine learning.  
 
-7. **Procesamiento de listas y texto**  
-   - En **`tags`** se unificaron separadores y se eliminaron duplicados.  
-   - En **`tools_used`** y **`attack_steps`** se aplicó tokenización para análisis de frecuencia y métricas.  
-   - Se generó la variable `n_attack_steps` (número de pasos por registro).  
+7. **Clusterizado de las columnas previamente vectorizadas**  
+   - Con el uso de Kmeans se crearon clusteres para que el aprendizaje no supervisado encontrara por si mismo patrones para agrupar los diferentes valores que tenían las columnas y así crear grupos mas sencillos de interpretar.
+   - Posteriormente de manera manual se le asignaron etiquetas a cada uno de los clusteres para poder sacar conclusiones de mejor manera.
 
 8. **Controles de calidad post–limpieza**  
-   - Validación de integridad de `ID` como clave única.  
-   - Revisión de distribución balanceada por `category`.  
+   - Validación de integridad de `ID` como clave única.   
    - Comprobación de consistencia general del dataset final.  
 
 > Resultado: un dataset **estructurado, confiable y analíticamente sólido**, listo para extraer patrones, evaluar impacto y explorar tendencias en detección y mitigación.  
@@ -52,7 +50,10 @@ Con el fin de garantizar la calidad y confiabilidad del análisis, se realizaron
 ---
 
 ## 📌 Principales hallazgos del análisis  
-*(Se completará una vez finalizado el análisis práctico de los datos.)*  
+En el primer análisis se encontró una conclusión interesante y es que los dispositivos más vulnerables y comunmente atacados son los dispositivos embebidos y los Iot que aparentemente un usuario no pensaría en ellos como un dispositivo final sensible a ser atacado, pero el análisis visto y la evidencia muestran lo contrario. Esto podría ser el punto de partida para la protección de estos equipos con un mayor esfuerzo a futuro.
+
+En el segundo análisis luego de hacer una clusterizacion tanto de las categorias como de los impactos para obtener correlaciones mas generales pero también mas claras, se pudo ver que el impacto más frecuente es la fuga de información ya que guarda una fuerte correlación con varias de las categorías vistas.
+Además la ejecución de código, el acceso no autorizado y la filtración de datos se puede ver que son impactos que salen de alguna manera a partir de todas las categorías de los ataques. Entonces se podrían tomar medidas de ciberseguridad para reforzar evitar estos impactos.
 
 ---
 
